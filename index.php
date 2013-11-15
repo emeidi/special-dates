@@ -40,6 +40,32 @@
     out('Found ' . count($matchingDates) . ' matching dates');
     //out('');
     
+    // ==============================================================
+    outHeader('Dates with twins or symmetric numbers');
+    
+    foreach($matchingDates as $matchingDate) {
+        $day = date('d',$matchingDate[0]);
+        $month = date('m',$matchingDate[0]);
+        
+        if($debug) out('Looking at ' . date('l, Y-m-d',$matchingDate[0]));
+        
+        if($debug) out('+++ Checking for twins');
+        
+        if($day == $month) {
+            out('Twins found in date ' . date('l, Y-m-d',$matchingDate[0]));
+            //out('');
+        }
+        
+        if($debug) out('+++ Checking for reversed');
+        
+        $dayReversed = implode(null,array_reverse(str_split($day)));
+        if($dayReversed == $month) {
+            out('Symmetry found in date ' . date('l, Y-m-d',$matchingDate[0]));
+            //out('');
+        }
+    }
+    
+    // ==============================================================
     // Now measure date entropy
     $measure = array();
     foreach($matchingDates as $matchingDate) {
@@ -72,30 +98,7 @@
         }
     }
     
-    outHeader('Dates with twins or symmetric numbers');
-    
-    foreach($matchingDates as $matchingDate) {
-        $day = date('d',$matchingDate[0]);
-        $month = date('m',$matchingDate[0]);
-        
-        if($debug) out('Looking at ' . date('l, Y-m-d',$matchingDate[0]));
-        
-        if($debug) out('+++ Checking for twins');
-        
-        if($day == $month) {
-            out('Twins found in date ' . date('l, Y-m-d',$matchingDate[0]));
-            //out('');
-        }
-        
-        if($debug) out('+++ Checking for reversed');
-        
-        $dayReversed = implode(null,array_reverse(str_split($day)));
-        if($dayReversed == $month) {
-            out('Symmetry found in date ' . date('l, Y-m-d',$matchingDate[0]));
-            //out('');
-        }
-    }
-    
+    // ==============================================================
     outHeader('Dates with a lot of similar numbers');
     
     $dateStrings = array('Year as 4 digits' => 'l, Y-m-d','Year as 2 digits' => 'l, y-m-d');
